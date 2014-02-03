@@ -35,8 +35,9 @@ The second step is to create a model configuration. This is done by suppling a l
 ```
 
 And setting a couple  configuration options:
+
 1. Classifier attributes index -  Property `WekaModelConfig.CLASS_INDEX`
-2. Weka implementation to use - Property `WekaModelConfig.CLASSIFIER_IMPL`
+1. Weka implementation to use - Property `WekaModelConfig.CLASSIFIER_IMPL`
 
 ```java
     Map<String, String> properties = ImmutableMap.of(
@@ -66,7 +67,7 @@ Running [TrainingSample.java] should display the generated model identifier
 Trained model UUID = f80e7881-e267-4d2b-9262-d58c8adcdae2
 ```
 
-So, behind the scenes, FOS trained and persisted a weka model with the specified configuration. If you're curious you may now check the `fos-server/models` folder. It should contain `.model` with the trained model and a `.header` with the model configuration:
+So, behind the scenes, FOS trained and persisted a weka model with the specified configuration. If you're curious you may now check the `fos-server/models` folder. It should contain `.model` file with the trained model and a `.header` file with the model configuration:
 
 ```json
 {
