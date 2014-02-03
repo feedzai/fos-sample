@@ -5,11 +5,11 @@ FOS Sample code
 
 This project contains FOS sample training and scoring samples.
 
-All the following samples assume a locally running fos server with the default configuration. Please checkout [fos-core] readme on how to create and start a fos server bundle
+All the following samples assume a locally running fos server with the default configuration. Please checkout [fos-core](https://github.com/feedzai/fos-core/blob/master/README.md) readme on how to create and start a fos server bundle
 
 # Training a WEKA classifier
 
-You can check the full code @ [TrainingSample]
+You can check the full code: [TrainingSample](https://github.com/feedzai/fos-sample/blob/master/src/main/java/com/feedzai/fos/samples/weka/WekaTraining.java).
 
 The first step is to create a FOS manager. The manager provides an API to manage and train models. 
 You can create a manager by calling the `create` method on the `FOSManagerAdapter`. The method has two parameters:
@@ -117,7 +117,7 @@ So, behind the scenes, FOS trained and persisted a weka model with the specified
 
 This sample assumes that you've sucessfully trained a model as specified in the previous step.
 
-Now that we have a trained model, we can move on to the [ScoringSample]. 
+Now that we have a trained model, we can move on to the [scoring sample](https://github.com/feedzai/fos-sample/blob/master/src/main/java/com/feedzai/fos/samples/weka/WekaScoring.java). 
 
 First we have to pass the previously trained model UUID: 
 
@@ -136,7 +136,7 @@ Then we obtain a reference to the manager:
         FOSManagerAdapter manager = FOSManagerAdapter.create("localhost", 5959);
 ```
 
-Add a couple sample scoring instances. These were randomly from the [iris] dataset - one for each flower type:
+Add a couple sample scoring instances. These were randomly from the [iris](http://en.wikipedia.org/wiki/Iris_flower_data_set) dataset - one for each flower type:
 
 ```java
         List<Object[]> scorables = Arrays.asList(new Object[][] {
@@ -180,11 +180,3 @@ Instance 3  | 0.000000 | 0.000000 | 1.000000
 ```
 
 As we can see, the algorithm predicted the flower type with a high decree of certainty. After all we're scoring the same instances that were part of the original training :smirk:
-
-
-
-[TrainingSample](https://github.com/feedzai/fos-sample/blob/master/src/main/java/com/feedzai/fos/samples/weka/WekaTraining.java)
-[ScoringSample](https://github.com/feedzai/fos-sample/blob/master/src/main/java/com/feedzai/fos/samples/weka/WekaScoring.java)
-[iris](http://en.wikipedia.org/wiki/Iris_flower_data_set)
-
-[fos-core](https://github.com/feedzai/fos-core/blob/master/README.md)
