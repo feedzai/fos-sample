@@ -60,7 +60,7 @@ public class TrainingSample
 
 
         Map<String, String> properties = ImmutableMap.of(WekaModelConfig.CLASS_INDEX, "4",
-                WekaModelConfig.CLASSIFIER_IMPL, J48.class.getName());
+                                                         WekaModelConfig.CLASSIFIER_IMPL, J48.class.getName());
 
         ModelConfig modelConfig = new ModelConfig(attributes, properties);
 
