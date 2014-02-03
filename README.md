@@ -1,4 +1,4 @@
-FosSample
+com.feedzai.fos.FosSample
 =========
 
 This project contains FOS sample training and scoring samples.
@@ -110,5 +110,5 @@ So, behind the scenes, FOS trained and persisted a weka model with the specified
 ```
 
 
-[TrainingSample.java](https://github.com/feedzai/FosSample/blob/master/src/main/java/FosSample/TrainingSample.java)
+[TrainingSample.java](https://github.com/feedzai/com.feedzai.fos.FosSample/blob/master/src/main/java/com.feedzai.fos.FosSample/TrainingSample.java)
 [fos-core](https://github.com/feedzai/fos-core/blob/master/README.md)

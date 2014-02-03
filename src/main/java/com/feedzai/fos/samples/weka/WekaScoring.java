@@ -20,54 +20,55 @@
  * #$
  */
 
-package FosSample;
+package com.feedzai.fos.samples.weka;
 
 import com.feedzai.fos.api.*;
-import com.feedzai.fos.impl.weka.config.WekaModelConfig;
 import com.feedzai.fos.server.remote.api.FOSManagerAdapter;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import weka.classifiers.trees.J48;
 
-import java.io.File;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 /**
- * FOS Training sample code.
+ * FOS Scoring sample code.
+ *
+ * This sample assumes that a model has been previously trained by {@see com.feedzai.fos.samples.WekaTraining}
  *
  * This code trains a sample model using the @see <a href="http://en.wikipedia.org/wiki/Iris_flower_data_set">Iris flower dataset</a>
  *
  * @author Miguel Duarte (miguel.duarte@feedzai.com)
  */
-public class TrainingSample
+public class WekaScoring
 {
     public static void main( String[] args ) throws RemoteException, NotBoundException, FOSException {
+        if (args.length != 1) {
+            System.err.println("Please supply the model UUID to score");
+            return;
+        }
         FOSManagerAdapter manager = FOSManagerAdapter.create("localhost", 5959);
 
-        List<Attribute> attributes = ImmutableList.of(
-            new NumericAttribute("sepalLength"),
-            new NumericAttribute("sepalWidth"),
-            new NumericAttribute("petalLength"),
-            new NumericAttribute("petalWidth"),
-            new CategoricalAttribute("class",
-                                     ImmutableList.of("Iris-setosa",
-                                                      "Iris-versicolor",
-                                                      "Iris-virginica")));
+        UUID modelId = UUID.fromString(args[0]);
 
+        List<Object[]> scorables = Arrays.asList(new Object[][] {
+                {5.8,4.0,1.2,0.2, null}, // 1: Iris-setosa
+                {6.9,3.1,4.9,1.5, null}, // 2: Iris-versicolor
+                {6.0,2.2,5.0,1.5, null}  // 3: Iris-virginica
+        });
 
-        Map<String, String> properties = ImmutableMap.of(WekaModelConfig.CLASS_INDEX, "4",
-                                                         WekaModelConfig.CLASSIFIER_IMPL, J48.class.getName());
+        Scorer scorer = manager.getScorer();
 
-        ModelConfig modelConfig = new ModelConfig(attributes, properties);
+        System.out.println("Probability for ");
+        System.out.println("Instance ID |  setosa  |versicolor| virginica");
 
-        File trainFile = new File("iris.data");
-
-        UUID uuid = manager.trainAndAddFile(modelConfig, trainFile.getAbsolutePath());
-
-        System.out.println("Trained model UUID = " + uuid);
+        int instanceid = 1;
+        for(double[] score : scorer.score(modelId, scorables)) {
+            System.out.println(String.format("Instance %1$d  | %2$f | %3$f | %4$f",
+                                             instanceid++,
+                                             score[0],
+                                             score[1],
+                                             score[2]));
+        }
     }
 }
