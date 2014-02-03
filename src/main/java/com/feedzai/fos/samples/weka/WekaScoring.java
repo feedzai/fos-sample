@@ -47,9 +47,9 @@ public class WekaScoring
             System.err.println("Please supply the model UUID to score");
             return;
         }
-        FOSManagerAdapter manager = FOSManagerAdapter.create("localhost", 5959);
-
         UUID modelId = UUID.fromString(args[0]);
+
+        FOSManagerAdapter manager = FOSManagerAdapter.create("localhost", 5959);
 
         List<Object[]> scorables = Arrays.asList(new Object[][] {
                 {5.8,4.0,1.2,0.2, null}, // 1: Iris-setosa
